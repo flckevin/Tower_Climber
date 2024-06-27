@@ -35,7 +35,7 @@ public class CameraRotationController : MonoBehaviour
 
             if(_touch.phase == TouchPhase.Moved)
             {
-                Debug.Log("MOVING");
+                //Debug.Log("MOVING");
                 Vector3 _direction = _previousPosition - _cam.ScreenToViewportPoint(_touch.position);
                 
                 cineCam.transform.position = target.transform.position;
