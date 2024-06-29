@@ -9,12 +9,28 @@ public class TowerBehaviour : MonoBehaviour
     public float checkRadius; //radius of tower to check
     public LayerMask mask; //mask check
 
+    [Header("PROJECTILE")]
+    public ProjectileBase projectile;//projectile of tower
+
+    private SphereCollider _sphereCol;//get sphere collider
     private List<EntitiesCore> enemy = new List<EntitiesCore>(); // list to store all enmey
-    private EntitiesCore focusTarget;
+    private EntitiesCore focusTarget; // target to focus to kill
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //====================== GET ==========================
+        //get sphere collider
+        _sphereCol = GetComponent<SphereCollider>();
+        //====================== GET ==========================
+
+        //====================== SET ==========================
+        //set sphere radius
+        _sphereCol.radius = checkRadius;
+        //setup projectile pool
+        PoolManager.Setup(projectile,2);
+        //====================== SET ==========================
     }
 
     void Update()
@@ -22,6 +38,9 @@ public class TowerBehaviour : MonoBehaviour
         TowerShootBehaviour();
     }
 
+    /// <summary>
+    /// function of tower behaviour
+    /// </summary>
     private void TowerShootBehaviour() 
     {
         //if enemy count is less than 0 then dont execute
@@ -34,7 +53,6 @@ public class TowerBehaviour : MonoBehaviour
             focusTarget = enemy[0];
         }
 
-        
 
     }
 
