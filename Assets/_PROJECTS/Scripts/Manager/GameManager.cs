@@ -5,5 +5,6 @@ using UnityEngine;
 using Quocanh.pattern;
 public class GameManager : QuocAnhSingleton<GameManager>
 {
-   
+    [Header("Player")]
+    public TowerBehaviour tower;
 }
