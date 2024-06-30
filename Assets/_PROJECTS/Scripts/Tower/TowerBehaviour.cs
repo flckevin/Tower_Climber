@@ -28,8 +28,14 @@ public class TowerBehaviour : MonoBehaviour
         //====================== SET ==========================
         //set sphere radius
         _sphereCol.radius = checkRadius;
-        //setup projectile pool
-        PoolManager.Setup(projectile,2);
+        
+        //if there is projectile to spawn
+        if (projectile != null) 
+        {
+            //setup projectile pool
+            PoolManager.Setup(projectile,20);
+        } 
+        
         //====================== SET ==========================
     }
 
@@ -44,7 +50,7 @@ public class TowerBehaviour : MonoBehaviour
     private void TowerShootBehaviour() 
     {
         //if enemy count is less than 0 then dont execute
-        if (enemy.Count < 0) return;
+        if (enemy.Count <= 0) return;
 
         //if focus target not exist
         if (focusTarget == null)
