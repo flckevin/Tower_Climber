@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1004275319180385643}
   - component: {fileID: 4760418168497494172}
   - component: {fileID: 5277743483067554037}
-  m_Layer: 0
+  - component: {fileID: 2030410253050794353}
+  m_Layer: 8
   m_Name: Common_soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +128,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entitiesData: {fileID: 11400000, guid: 040c72a947545b14c80030ceca2dd9ff, type: 2}
   entityDamageParticle: {fileID: 0}
+--- !u!114 &2030410253050794353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869340094804555228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1073741824
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1 &6156054888466624950
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +162,7 @@ GameObject:
   - component: {fileID: 6691410431390544377}
   - component: {fileID: 7856310778635613348}
   - component: {fileID: 7823441153554856341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +267,7 @@ GameObject:
   - component: {fileID: 2703406783132367674}
   - component: {fileID: 7852472295392203574}
   - component: {fileID: 5260619687931739658}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: man-soldier-houndskull-a_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

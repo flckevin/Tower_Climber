@@ -7,5 +7,6 @@ public class Common_CloseRange : EntitiesCore
     protected override void Start()
     {
         base.Start();
+
     }
 }

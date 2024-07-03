@@ -33,14 +33,13 @@ public class EntitiesCore : MonoBehaviour
         _seeker = GetComponent<Seeker>();
         //======================== GET ==========================
 
-
         //======================= SET =======================
         //setup entity health
         _health = entitiesData.health;
         //setting tag
         this.gameObject.tag = "Enemy";
         //start path
-        _seeker.StartPath(this.transform.position, GameManager.Instance.tower.transform.position, OnReachTarget);
+        _seeker.StartPath(transform.position, GameManager.Instance.tower.transform.position);
         //======================= SET =======================
 
         //Debug.Log("Finished");
@@ -63,8 +62,5 @@ public class EntitiesCore : MonoBehaviour
         _health -= _damageReceive;
         #endregion
     }
-
-
-    protected virtual void OnReachTarget(Path p) { }
 
 }

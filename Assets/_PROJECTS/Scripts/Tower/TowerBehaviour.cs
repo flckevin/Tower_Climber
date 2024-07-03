@@ -59,7 +59,6 @@ public class TowerBehaviour : MonoBehaviour
             focusTarget = enemy[0];
         }
 
-
     }
 
 
