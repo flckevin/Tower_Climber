@@ -280,7 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cineCam: {fileID: 579432564}
   target: {fileID: 1428440649}
-  offsetZ: -35
+  offsetZ: -40
 --- !u!4 &579432564
 Transform:
   m_ObjectHideFlags: 0
@@ -457,11 +457,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
       propertyPath: m_LocalPosition.x
@@ -502,6 +506,10 @@ PrefabInstance:
     - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527797358460674, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 23482602090685384, guid: b52e6fdb9179d4ef19097ea8727a4496, type: 3}
       propertyPath: m_CastShadows
@@ -587,7 +595,7 @@ MonoBehaviour:
   m_Follow: {fileID: 579432564}
   m_Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 27
+    OrthographicSize: 35
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -675,7 +683,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 9
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1428440651
 MonoBehaviour:
@@ -689,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73cb6233867dc84e84e5518ee398fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadius: 9
+  checkRadius: 12
   projectile: {fileID: 6436428160202314059, guid: 544f8ceb04ab560428f74db6fb93b869, type: 3}
   fireRate: 1
 --- !u!54 &1428440652
@@ -819,7 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1073741824
   data:
-    dataString: UEsDBBQAAAgIAAA4IewpNYrXwgIAAAEGAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVE1z2jAQ/SuMzk3GOIbQ3logpIckTEgnh5KDYq2xBiF5JDlAMvnv3ZUFNqSZzNi8/Xr7dtcfTGpXQe6NnVkp7owA9qPH6J1967XGW9jxldEL+Q4Hn2cpfElOPPg8ci8N4n0Kc2YD3sr8p14pck4QrLUsjN1MxQrGxnmHcMGVAzRZ4ylaI/TRY7sYsI/Pd3r2PvEtB+3Btl7Xl6PrZDT8nl1PL5LRf0NqnSu+qUAQ9TYySy4T+rs6RGXD4K6xuehJjeRGKekiM+b3Veh8zCtXY1/oICTHTgMn8i9BrkqPP9Ju8ENROPCRmuX7ibQoWJOV/TKNihvu1g2/N65qqjPop4FTk/Tui32YBXNhzeb2ULefUA1fynz9yPc5d74jcxeenBKv9ZarNX9V8FyCvjcza2ot0OhtTaG1g3TSSXXsbVxCvm79Gq5nYF19HWy/ndJn6H638FAd+0gusxb948AtlAnix5Rkich3SgkWB/cb+wl75GIhRIkjxj/xVXfhouFGWufRFPlElHznOCEQoHOIul+QgyZ6r6a2lItNA1cSo/ZjYzUEOBKsQHPl93PM6M9X4MzW4XVmueF0e5FdtB1O6iwkwK1/kpyZ5mZ7HLbF5XVhow9vf19oCK402ztw5UPtldQdtclwjwKPjdbN5nbFPIQtalvwvBPmYedrCxPueaiGdHDBRDcUtQwRulaKdjk0EBhhA/T/QvqWHOuqALN7o8PlnTwD/VUtxemFsMEIioIPkywpsmEyurpIszTlg+GoP0gHqUgECyckNcrN1bzRK04Jt0u3vWg8l8OXsTezvApHKyzfzuT7xnQmL3VhFrkF0A9NhmOzYLEIflzEVEhscwHeSx32kn0smTL5GsTymGgZhJ3uvOXLNsuSVfLNeEKWbBy+h0tG8PEicXXfJGyp+EkyUDg6EE9SwYZXZEo+2ec/UEsDBBQAAAgIAAA4IewRzlfXbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNUz1DPSUVBKL0osyCgGChiCOKWZKSB2tJKpRWpaWqKZgYlBmomZgYWxrpGJkVGiqZmFoamRqVGKQYpSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAADgh7Ck1itfCAgAAAQYAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAADgh7BHOV9dsAAAAdwAAAAkAJAAAAAAAAAAAAAAADwMAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAADGAwAAAAA=
+    dataString: UEsDBBQAAAgIAAA4IezCw9jlyAIAAAgGAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMtu4jAU/RXk9VAlKQQ6uxmgdBZtUemoi6ELN74hFsaO/CjQqv8+144hgUpICefcx7mvfBIuTQ2FVXquObtXDMjPHvHv5EevJe9gT9dKLvkHHG1eOLOVN6LB5olarhBPvZtRW7CaF7/kWnjjBEEnean0dsbWMFHGGoRLKgwgpZX13hKhzx7ZR4dDfH74Z+8L3wqQFnRr1b++GqeD/GaUjWb9JL/wQTZLrwf5KE+RHYUIThaCbmtgvpI20GgcfW+aRBJrjBa+nkIJwU0USOyhDg2Y0No4LA8NGKdYcJDm7Svg68rin6zr/FiWBmwUqOlhyjX2rYlKfqummVtqNo2udyqczzNMs6CpCXr/jc8HgS612t4d86aJz2ErXmye6KGgxna63YWn58Kd3FGxoW8CXiqQD2qulZMMSaudd3UGsmkn1Km2SQXFprVrtF6Arv4+37Sd71eofr+0UJ/qSK4GLfrXgFkKFZofQ3omIjc+JGgc3B+sJ6yTiYkQ9RrR/5muu3sXiVuujUUq6omot13ghICBLCD2ve8NpJf3ppz2scgsaPXNcHaitIQAR4E1SCrsYYER7eUKXHAdXRfMLfUnGNVF7nhZFy4Bbu2T5IJaqN1p2BqX14SNPr79e/VDMJXa3YOpHp0VXHa67YkHbPBESdlsbreZR7el0yUtOm4W9tZpmFJLQzaUgwvGuq7Yy+AhnRB+l0MBQREW4H+vvr8VxbwiwORByXB5Z88gf+04O78QMhxDWdI8GSTlIE/G1/1skGV0mI/TYTbMWMJIOCEusd1ULJp+xSnhdsm2FonncvxA9uaa1uFomaa7Of/Yqs7kuSzVstAA8rGJcCoWNCbBjwubMY5lLsFaLsNeks8VEarYAFudAq1CY2d7q+mqjbIiNX9X1iMrMgmfxRXx8OkicXXfOex88rNgIHB0wJ65gC2tPZV8ka//UEsDBBQAAAgIAAA4IewRzlfXbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNUz1DPSUVBKL0osyCgGChiCOKWZKSB2tJKpRWpaWqKZgYlBmomZgYWxrpGJkVGiqZmFoamRqVGKQYpSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAADgh7MLD2OXIAgAACAYAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAADgh7BHOV9dsAAAAdwAAAAkAJAAAAAAAAAAAAAAAFQMAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAADMAwAAAAA=
     file_cachedStartup: {fileID: 0}
     cacheStartup: 0
   showNavGraphs: 1
@@ -1058,7 +1066,7 @@ Camera:
   far clip plane: 1000
   field of view: 60.000004
   orthographic: 1
-  orthographic size: 27
+  orthographic size: 35
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

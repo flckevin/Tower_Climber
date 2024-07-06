@@ -23,7 +23,8 @@ public class ProjectileBase : MonoBehaviour
     {
         //move target to desiered position
         this.transform.position = _from;
-
+        //look at target
+        this.transform.LookAt(_target.transform);
         //move arrow position to enemy
         Tween.Position(this.transform, _target.transform.position, duration: _speed).OnComplete(() => 
         {
