@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4760418168497494172}
   - component: {fileID: 5277743483067554037}
   - component: {fileID: 2030410253050794353}
+  - component: {fileID: 7649193736782518710}
   m_Layer: 8
   m_Name: Common_soldier
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,6 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entitiesData: {fileID: 11400000, guid: 040c72a947545b14c80030ceca2dd9ff, type: 2}
   entityDamageParticle: {fileID: 0}
+  _health: 0
+  currentPathIndex: 0
 --- !u!114 &2030410253050794353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +153,27 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!65 &7649193736782518710
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869340094804555228}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7, y: 2, z: 0.7}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6156054888466624950
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +185,6 @@ GameObject:
   - component: {fileID: 5643675775934173785}
   - component: {fileID: 6691410431390544377}
   - component: {fileID: 7856310778635613348}
-  - component: {fileID: 7823441153554856341}
   m_Layer: 8
   m_Name: sword
   m_TagString: Untagged
@@ -234,28 +257,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7823441153554856341
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6156054888466624950}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d9902a8ebc9f34dd383a1219fad16f2e, type: 3}
 --- !u!1 &8982979093120262968
 GameObject:
   m_ObjectHideFlags: 0

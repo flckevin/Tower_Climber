@@ -55,8 +55,18 @@ public static class PoolManager
     /// <returns></returns>
     public static T GetItem<T>(string _itemName) where T : Component
     {
-        //increase item id
-        poolIDM[_itemName]++;
+        //if id have not exceed length of list
+        if (poolIDM[_itemName] + 1 < poolM[_itemName].Count)
+        {
+            //increase item id
+            poolIDM[_itemName]++;
+        }
+        else //it has exceed list
+        {
+            //set it back to 0
+            poolIDM[_itemName] = 0;
+        }
+        
         //return the item that found
         return poolM[_itemName][poolIDM[_itemName]] as T;
     }

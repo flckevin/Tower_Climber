@@ -49,5 +49,7 @@ public class SkinnedMeshBaker : OdinEditorWindow
         //get material from skinned mesh and apply it
         _meshStorageRenderer.sharedMaterial = _targetSkinnedMesh.material;
 
+
+        Debug.Log($"<color=green> BAKED {_meshStorage_G.gameObject.name}</color>");
     }
 }
