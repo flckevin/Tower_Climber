@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour
 {
-    private Action<EntitiesCore> _callBackOnHit; // call back function when arrow hit it target
+    public Action _callBackOnHit; // call back function when arrow hit it target
     public ProjectileData _projectileData; // projectile data
     // Start is called before the first frame update
     void Start()
@@ -21,12 +21,16 @@ public class ProjectileBase : MonoBehaviour
     /// <param name="_speed"> travel speed </param>
     public void Shoot(Vector3 _from, Transform _target,float _speed) 
     {
+        //randomize target height
+        float _randedY = UnityEngine.Random.Range(0.75f, 1.7f);
+        //calculate correct target position
+        Vector3 _targetPos = new Vector3(_target.position.x, _randedY, _target.position.z);
         //move target to desiered position
         this.transform.position = _from;
         //look at target
         this.transform.LookAt(_target.transform);
         //move arrow position to enemy
-        Tween.Position(this.transform, _target.transform.position, duration: _speed).OnComplete(() => 
+        Tween.Position(this.transform, _targetPos, duration: _speed).OnComplete(() => 
         {
             //wait for 1 sec
             Tween.Delay(1f);
@@ -36,22 +40,11 @@ public class ProjectileBase : MonoBehaviour
             Tween.Delay(0.4f);
             //deactivate this arrow
             this.gameObject.SetActive(false);
+            //call back on hit
+            _callBackOnHit();
         });
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.gameObject.name);
-        //if other has enemy tag
-        if (other.CompareTag("Enemy")) 
-        {
-            //get enetity compoenent
-            EntitiesCore _entity = other.GetComponent<EntitiesCore>();
-            //deal damage to it
-            DealDamage(_entity);
-            
-        }
-    }
 
     /// <summary>
     /// base function to deal damage to enemy

@@ -66,7 +66,7 @@ public static class PoolManager
             //set it back to 0
             poolIDM[_itemName] = 0;
         }
-        
+
         //return the item that found
         return poolM[_itemName][poolIDM[_itemName]] as T;
     }

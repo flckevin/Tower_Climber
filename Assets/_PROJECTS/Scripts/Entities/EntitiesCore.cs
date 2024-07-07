@@ -96,10 +96,9 @@ public class EntitiesCore : MonoBehaviour
     /// <param name="_effectAction"> effect that going to be apply on </param>
     /// <param name="_resetDefaultAction"> fucntion to reset effect </param>
     /// <param name="_delay"> delay before reseting back to normal </param>
-    public virtual void OndamageReceive(int _damageReceive = 0,Action _effectAction = null,
+    public virtual void OndamageReceive(float _damageReceive = 0,Action _effectAction = null,
                                          Action _resetDefaultAction = null,float _delay = 0)
     {
-        
         #region  Decrease health
         //decrease health
         _health -= _damageReceive;
@@ -109,9 +108,17 @@ public class EntitiesCore : MonoBehaviour
         {
             //disable ai script
             this.enabled = false;
+            //call on death event
+            OnDeath();
         }
-
         #endregion
+
+        Debug.Log("RECEVING DAMAGE");
+    }
+
+    public virtual void OnDeath() 
+    { 
+    
     }
 
     /// <summary>

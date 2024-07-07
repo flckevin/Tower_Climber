@@ -42,7 +42,7 @@ namespace Enetity.Common
     {
         public void Execute(EntitiesCore _entity)
         {
-            
+            Debug.Log("ATTACKING");
         }
     }
 }

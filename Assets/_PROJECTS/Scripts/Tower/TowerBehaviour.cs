@@ -5,17 +5,11 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [Header("GENERAL TOWER INFO")]
-    public float checkRadius; //radius of tower to check
-
     [Header("PROJECTILE")]
     public ProjectileBase projectile;//projectile of tower
 
-    [Header("WEAPON INFO")]
-    public float fireRate;//fire rate of the tower
-
     private SphereCollider _sphereCol;//get sphere collider
-    private List<EntitiesCore> _enemy = new List<EntitiesCore>(); // list to store all enmey
+    [SerializeField]private List<EntitiesCore> _enemy = new List<EntitiesCore>(); // list to store all enmey
     private EntitiesCore _currentTarget; // target to focus to kill
     private float _time;//last time of the frame to calculate fire rate
 
@@ -30,7 +24,7 @@ public class TowerBehaviour : MonoBehaviour
         //====================== SET ==========================
 
         //set sphere radius
-        _sphereCol.radius = checkRadius;
+        _sphereCol.radius = TowerData._towerCheckRadius;
         
         //if there is projectile to spawn
         if (projectile != null) 
@@ -59,25 +53,32 @@ public class TowerBehaviour : MonoBehaviour
         //increase time rate
         _time += Time.deltaTime;
         //calculate next time to fire
-        float _nextTimeFire = 1 / fireRate;
+        float _nextTimeFire = 1 / TowerData._towerFireRate;
 
+        //if focus target not exist
+        if (_currentTarget == null)
+        {
+            //get focus target
+            _currentTarget = _enemy[0];
+            
+        }
+        else 
+        {
+            //if current health is less than 0
+            if (_currentTarget._health <= 0)
+            {
+                //remove target from list
+                _enemy.Remove(_currentTarget);
+                //set current target to null
+                _currentTarget = null;
+                return;
+            }
+        }
+
+        //========================= FIRE =========================
         //if time is already pass through time to shoot then shoot
         if (_time >= _nextTimeFire) 
         {
-            //=============== FIRE ===============
-            //if focus target not exist
-            if (_currentTarget == null)
-            {
-                //get focus target
-                _currentTarget = _enemy[0];
-                //if current health is less than 0
-                if (_currentTarget._health <= 0) 
-                { 
-                    //remove target from list
-                    _enemy.Remove(_currentTarget);
-                    return;
-                }
-            }
 
             //get projectile from list
             ProjectileBase _projectile = PoolManager.GetItem<ProjectileBase>(projectile.name);
@@ -88,15 +89,21 @@ public class TowerBehaviour : MonoBehaviour
                                             this.transform.position.z);
             //activate projectile
             _projectile.gameObject.SetActive(true);
+
             //set back to default value
             _projectile.ResetDefault();
+
             //shoot to target
             _projectile.Shoot(_startPos,_currentTarget.transform, 0.3f);
-            //=============== FIRE ===============
+
+            //call back event of projectile on hit
+            //which deal damage to the enemy
+            _projectile._callBackOnHit = () => { _currentTarget.OndamageReceive(TowerData._towerDamageDeal); };
 
             //set time back to default so we can calculate next time to fire
             _time = 0;
         }
+        //========================= FIRE =========================
 
     }
 
@@ -108,6 +115,11 @@ public class TowerBehaviour : MonoBehaviour
             //add that to enemy list
             _enemy.Add(other.GetComponent<EntitiesCore>());
         }
+    }
+
+    public void UpgradeTower() 
+    { 
+    
     }
 
 }
