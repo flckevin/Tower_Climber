@@ -59,19 +59,25 @@ public class EntitiesSpawner : MonoBehaviour
 
     IEnumerator SpawnCou() 
     {
-
+        //while the spawner not reach maximum amount of entity in the wave
         while (spawnedAmount < maximumEntityPerWave) 
         {
-            Vector3 _spawnPos = randomSpawnPoint();
+            //keep spawning
+            //get random point on a circle
+            Vector3 _spawnPos = randomCirlceSpawnPoint();
+            //get an entity from pool
             EntitiesCore _nextEntity = PoolManager.GetItem<EntitiesCore>(entities[0].name);
+            //set that entity position to be at that random spawn position
             _nextEntity.transform.position = _spawnPos;
+            //activate that entity
             _nextEntity.gameObject.SetActive(true);
+            //delay few second
             yield return new WaitForSeconds(delayBetween);  
         }
 
     }
 
-    private Vector3 randomSpawnPoint() 
+    private Vector3 randomCirlceSpawnPoint() 
     {
         Vector3 _spawnPos;
 

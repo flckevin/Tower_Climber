@@ -96,13 +96,23 @@ public class EntitiesCore : MonoBehaviour
     /// <param name="_effectAction"> effect that going to be apply on </param>
     /// <param name="_resetDefaultAction"> fucntion to reset effect </param>
     /// <param name="_delay"> delay before reseting back to normal </param>
-    public virtual void OndamageReceive(float _damageReceive = 0,Action _effectAction = null,
+    public virtual void OndamageReceive(float _damageReceive = 0,Transform _hitPos = null,Action _effectAction = null,
                                          Action _resetDefaultAction = null,float _delay = 0)
     {
-        #region  Decrease health
+        #region ===================== BLOOD PARTICLE =====================
+        //get blood splat from pool
+        ParticleSystem _blood = PoolManager.GetItem<ParticleSystem>("BloodSplat");
+        //move blood to hit position
+        _blood.transform.position = _hitPos.transform.position;
+        //activate it blood
+        _blood.gameObject.SetActive(true);
+        //play blood
+        _blood.Play();
+        #endregion
+
+        #region ===================== DECREASE HEALTH =====================
         //decrease health
         _health -= _damageReceive;
-        
         //if healthless or equal to 0
         if (_health <= 0) 
         {

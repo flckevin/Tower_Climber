@@ -98,7 +98,7 @@ public class TowerBehaviour : MonoBehaviour
 
             //call back event of projectile on hit
             //which deal damage to the enemy
-            _projectile._callBackOnHit = () => { _currentTarget.OndamageReceive(TowerData._towerDamageDeal); };
+            _projectile._callBackOnHit = () => { _currentTarget.OndamageReceive(TowerData._towerDamageDeal,_projectile.transform); };
 
             //set time back to default so we can calculate next time to fire
             _time = 0;
