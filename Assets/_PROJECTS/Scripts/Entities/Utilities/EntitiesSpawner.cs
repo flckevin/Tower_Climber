@@ -5,12 +5,12 @@ using UnityEngine;
 public class EntitiesSpawner : MonoBehaviour
 {
     [Header("SpawnerInfo"), Space(10)]
-    public int amountPerEnemy; // amount per enemy that going to be in scene
-    public int amountBloodParticlePrefab; //amount of blood particle that going to be on scene
+    public int amountEntityPerTypeOnScene; // amount per enemy that going to be in scene
+    public int amountBloodPrefabOnScene; //amount of blood particle that going to be on scene
     public float randSphereRadius; // sphere radius
 
     [Header("Entity"),Space(10)]
-    public int maxmimumEnemyAmount; // maximum amount of enemy that can spawn during current wave
+    public int maximumEntityPerWave; // maximum amount of enemy that can spawn during current wave
     public float delayBetween; // delay between waves
     public List<EntitiesCore> entities;//list of all avalible entity in game
 
@@ -28,11 +28,11 @@ public class EntitiesSpawner : MonoBehaviour
         for (int i =0; i < entities.Count; i++) 
         {
             //spawn each entity 20 times
-            PoolManager.Setup(entities[i], amountPerEnemy);
+            PoolManager.Setup(entities[i], amountEntityPerTypeOnScene);
         }
 
         //setup pool of blood particle prefab
-        PoolManager.Setup(bloodParticlePrefab, amountBloodParticlePrefab);
+        PoolManager.Setup(bloodParticlePrefab, amountBloodPrefabOnScene);
 
         //start spawning
         StartSpawning();
@@ -60,10 +60,12 @@ public class EntitiesSpawner : MonoBehaviour
     IEnumerator SpawnCou() 
     {
 
-        while (spawnedAmount < maxmimumEnemyAmount) 
+        while (spawnedAmount < maximumEntityPerWave) 
         {
             Vector3 _spawnPos = randomSpawnPoint();
-
+            EntitiesCore _nextEntity = PoolManager.GetItem<EntitiesCore>(entities[0].name);
+            _nextEntity.transform.position = _spawnPos;
+            _nextEntity.gameObject.SetActive(true);
             yield return new WaitForSeconds(delayBetween);  
         }
 
@@ -73,10 +75,21 @@ public class EntitiesSpawner : MonoBehaviour
     {
         Vector3 _spawnPos;
 
-        Vector3 _spawnDir = Random.onUnitSphere*randSphereRadius; // could be anywhere on a sphere
-        _spawnDir.y = 0;
-        _spawnPos = _spawnDir;
-        _spawnPos.Normalize();
+        Vector3 randomPos = Random.insideUnitSphere * randSphereRadius;
+        randomPos += transform.position;
+        randomPos.y = 0f;
+
+        Vector3 direction = randomPos - transform.position;
+        direction.Normalize();
+
+        float dotProduct = Vector3.Dot(transform.forward, direction);
+        float dotProductAngle = Mathf.Acos(dotProduct / transform.forward.magnitude * direction.magnitude);
+
+        randomPos.x = Mathf.Cos(dotProductAngle) * randSphereRadius + transform.position.x;
+        randomPos.z = Mathf.Sin(dotProductAngle * (Random.value > 0.5f ? 1f : -1f)) * randSphereRadius + transform.position.z;
+
+        _spawnPos = randomPos;
+
         return _spawnPos;
     }
 }

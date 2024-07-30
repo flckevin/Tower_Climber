@@ -341,6 +341,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 1428440651}
+--- !u!1 &674196440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 674196441}
+  - component: {fileID: 674196442}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &674196441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674196440}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.774197, y: -4.566121, z: 7.9542036}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 970298589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &674196442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674196440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e1630e64eec4a46b2f61328bf57102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountEntityPerTypeOnScene: 20
+  amountBloodPrefabOnScene: 10
+  randSphereRadius: 20
+  maximumEntityPerWave: 5
+  delayBetween: 2
+  entities:
+  - {fileID: 5277743483067554037, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
+  bloodParticlePrefab: {fileID: 4972837880050995390, guid: 7a9b388f6ca14024d989a0206fa01326, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +606,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 671144601}
+  - {fileID: 674196441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &975220518
@@ -567,6 +620,10 @@ PrefabInstance:
     - target: {fileID: 4869340094804555228, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
       propertyPath: m_Name
       value: Common_soldier (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869340094804555228, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8633292927434220332, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -980,6 +1037,10 @@ PrefabInstance:
     - target: {fileID: 4869340094804555228, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
       propertyPath: m_Name
       value: Common_soldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869340094804555228, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8633292927434220332, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
       propertyPath: m_LocalPosition.x
