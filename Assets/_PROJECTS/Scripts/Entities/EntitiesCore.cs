@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using TMPro;
+using PrimeTween;
+
 
 [RequireComponent(typeof(Seeker))]
 
@@ -14,15 +16,18 @@ public class EntitiesCore : MonoBehaviour
     public EntitiesData entitiesData; // data of entityw
     public ParticleSystem entityDamageParticle; // particle when entity receive damage
     public MeshRenderer _entityMesh; // mesh of the entity
-    [HideInInspector] public float _health; // health of the entity 
+    public float _health; // health of the entity 
     public MeshFilter _meshFilt;
 
     [Header("Entity State Info"), Space(10)]
     public Mesh deathStateMesh;
+    public Mesh aliveMehs;
+    public bool ableToSpawn = true;
 
     [Header("General Weapon Info"), Space(10)]
     public GameObject entityWeapon;
 
+    protected Sequence _walkSequence;
     //============================= ENTITY VAR =================================
 
     //============================= AI VAR =================================
@@ -30,13 +35,13 @@ public class EntitiesCore : MonoBehaviour
     [HideInInspector] public int currentPathIndex; // current path
     protected Seeker _seeker;// seeker ai
     protected IEntityStates _states; //storage of the state to execute
-    
     //============================= AI VAR =================================
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         Setup();
+        
     }
 
 
@@ -54,14 +59,30 @@ public class EntitiesCore : MonoBehaviour
         //======================= SET =======================
         //setup entity health
         _health = entitiesData.health;
+
         //setting tag
         this.gameObject.tag = "Enemy";
+
         //store target position
         Vector3 _target = new Vector3(GameManager.Instance.tower.transform.position.x,
                                       this.transform.position.y,
                                       GameManager.Instance.tower.transform.position.z);
+
         //start path
         _seeker.StartPath(transform.position, _target, OnScanPathComplete);
+
+        /******************************************************************************************
+         * NOTE 
+         * In PrimeTween, tweens and sequences are non-reusable, so there is no direct equivalent.
+         * Instead, start a new animation in the desired direction (see the example below).
+         * Starting new animations in PrimeTween is extremely fast, so there is no need for caching.
+
+         ******************************************************************************************/
+
+        _walkSequence = Sequence.Create(-1, CycleMode.Yoyo)
+                        .Group(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y + 1, 0.3f))
+                        .Group(Tween.PositionY(_entityMesh.transform, 0, 0.3f));
+        
         //======================= SET =======================
 
     }
@@ -99,6 +120,7 @@ public class EntitiesCore : MonoBehaviour
 
 
     #region======================== ENTITY FUNCTIONS ========================
+   
     /// <summary>
     /// function on recieve damage
     /// </summary>
@@ -126,8 +148,6 @@ public class EntitiesCore : MonoBehaviour
         //if healthless or equal to 0
         if (_health <= 0) 
         {
-            //disable ai script
-            this.enabled = false;
             //call on death event
             OnDeath();
         }
@@ -138,6 +158,12 @@ public class EntitiesCore : MonoBehaviour
 
     public virtual void OnDeath() 
     {
+        _walkSequence.Complete();
+        _walkSequence.Stop();
+
+        //disable ai script
+        this.enabled = false;
+
         //set pose to death by changing mesh
         _meshFilt.mesh = deathStateMesh;
 
@@ -149,13 +175,32 @@ public class EntitiesCore : MonoBehaviour
                                                         _entityMesh.transform.eulerAngles.y,
                                                         _entityMesh.transform.eulerAngles.z));
         
+        //set position so it won't clip over land
         _entityMesh.transform.position = new Vector3(_entityMesh.transform.position.x,
-                                                    _entityMesh.transform.position.y + 0.13f,
+                                                    _entityMesh.transform.position.y + 0.2f,
                                                     _entityMesh.transform.position.z);
 
+        //deactivate entity weapon
         entityWeapon.SetActive(false);
 
+        Tween.StopAll(_entityMesh.transform);
+
+        //add some force to the entity using tween
+        Tween.Position(this.transform, (this.transform.position + (-this.transform.forward * 2)), 2f).OnComplete(() =>
+        {
+            Sequence.Create(1, 0)
+            .ChainDelay(1f)
+            .Chain(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y - 1.2f, 3f))
+            .OnComplete(() =>
+            {
+                //set able to spawn so that spawner can spawn it
+                ableToSpawn = true;
+            });
+
+        });
+
         
+
     }
 
     /// <summary>
@@ -166,6 +211,36 @@ public class EntitiesCore : MonoBehaviour
     { 
         //changing state
         _states = _stateToChange;
+    }
+
+    public void OnResetDefault() 
+    {
+
+        //reset health
+        _health = entitiesData.health;
+
+        //set rotation to be lying down for suitable at death state
+        _entityMesh.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        //set position so it stand up
+        _entityMesh.transform.position = new Vector3(_entityMesh.transform.position.x,
+                                                    0,
+                                                    _entityMesh.transform.position.z);
+        //setting tag
+        this.gameObject.tag = "Enemy";
+
+        //set mesh back to alive mesh
+        _meshFilt.mesh = aliveMehs;
+
+        //deactivate entity weapon
+        entityWeapon.SetActive(true);
+
+        _walkSequence = Sequence.Create(-1, CycleMode.Yoyo)
+                        .Group(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y + 1, 0.3f))
+                        .Group(Tween.PositionY(_entityMesh.transform, 0, 0.3f));
+
+        //set able to spawn so that spawner can not spawn it
+        ableToSpawn = false;
     }
 
     #endregion

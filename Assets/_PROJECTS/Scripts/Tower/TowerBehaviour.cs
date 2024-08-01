@@ -112,8 +112,11 @@ public class TowerBehaviour : MonoBehaviour
         //check if object enter to collider has enemy tag
         if (other.CompareTag("Enemy")) 
         {
+            //Debug.Log("ENEMY");
             //add that to enemy list
-            _enemy.Add(other.GetComponent<EntitiesCore>());
+            EntitiesCore _entity = other.GetComponent<EntitiesCore>();
+            Debug.Log($"Adding {_entity}");
+            _enemy.Add(_entity);
         }
     }
 

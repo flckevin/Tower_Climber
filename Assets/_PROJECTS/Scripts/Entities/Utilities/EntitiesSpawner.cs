@@ -67,10 +67,30 @@ public class EntitiesSpawner : MonoBehaviour
             Vector3 _spawnPos = randomCirlceSpawnPoint();
             //get an entity from pool
             EntitiesCore _nextEntity = PoolManager.GetItem<EntitiesCore>(entities[0].name);
-            //set that entity position to be at that random spawn position
-            _nextEntity.transform.position = _spawnPos;
-            //activate that entity
-            _nextEntity.gameObject.SetActive(true);
+
+            if (_nextEntity.ableToSpawn == true) 
+            {
+                //set that entity position to be at that random spawn position
+                _nextEntity.transform.position = _spawnPos;
+                //activate that entity
+                _nextEntity.gameObject.SetActive(true);
+                //enable entity script
+                _nextEntity.enabled = true;
+                //reset entity
+                _nextEntity.OnResetDefault();
+            }
+
+            
+            //increase amount have spawned
+            //spawnedAmount++;
+
+            //if spawned amount is more than maximum 
+            if (spawnedAmount >= maximumEntityPerWave) 
+            {
+                //break out of loop
+                break;
+            }
+
             //delay few second
             yield return new WaitForSeconds(delayBetween);  
         }

@@ -55,6 +55,8 @@ MonoBehaviour:
   _health: 0
   _meshFilt: {fileID: 7852472295392203574}
   deathStateMesh: {fileID: 4300000, guid: 063439e4948c9db489e6c08b02603ce3, type: 2}
+  aliveMehs: {fileID: 4300000, guid: f221c4e97a1b7d24aa5b9d29e6316224, type: 2}
+  isDead: 1
   entityWeapon: {fileID: 6156054888466624950}
   currentPathIndex: 0
 --- !u!114 &1004275319180385643
