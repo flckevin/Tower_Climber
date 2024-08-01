@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,9 @@ namespace Enetity.Common
         {
             //calculate distance between enemy and next path
             float _distance = Vector3.Distance(_entity.transform.position, _entity.path.vectorPath[_entity.currentPathIndex]);
-
+            
             //if distance is less than 0.2
-            if(_distance <= 0.2f) 
+            if (_distance <= 0.2f) 
             {
                 //if enetity next path wont exceed our path length
                 if (_entity.currentPathIndex + 1 < _entity.path.vectorPath.Count)
@@ -35,6 +36,9 @@ namespace Enetity.Common
 
             //moving to target using lerp
             _entity.transform.position = Vector3.Lerp(_entity.transform.position, _dir, (_entity.entitiesData.speed*Time.deltaTime));
+
+            //make AI look at it heading direction
+            _entity._entityMesh.transform.LookAt(_dir);
         }
     }
     

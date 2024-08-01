@@ -10,10 +10,19 @@ using TMPro;
 public class EntitiesCore : MonoBehaviour
 {
     //============================= ENTITY VAR =================================
-    [Header("General Entity Info")]
+    [Header("General Entity Info"),Space(10)]
     public EntitiesData entitiesData; // data of entityw
     public ParticleSystem entityDamageParticle; // particle when entity receive damage
+    public MeshRenderer _entityMesh; // mesh of the entity
     [HideInInspector] public float _health; // health of the entity 
+    public MeshFilter _meshFilt;
+
+    [Header("Entity State Info"), Space(10)]
+    public Mesh deathStateMesh;
+
+    [Header("General Weapon Info"), Space(10)]
+    public GameObject entityWeapon;
+
     //============================= ENTITY VAR =================================
 
     //============================= AI VAR =================================
@@ -21,6 +30,7 @@ public class EntitiesCore : MonoBehaviour
     [HideInInspector] public int currentPathIndex; // current path
     protected Seeker _seeker;// seeker ai
     protected IEntityStates _states; //storage of the state to execute
+    
     //============================= AI VAR =================================
 
     // Start is called before the first frame update
@@ -127,8 +137,25 @@ public class EntitiesCore : MonoBehaviour
     }
 
     public virtual void OnDeath() 
-    { 
-    
+    {
+        //set pose to death by changing mesh
+        _meshFilt.mesh = deathStateMesh;
+
+        //make AI look at it heading direction
+        //_entityMesh.transform.LookAt(GameManager.Instance.tower.transform.position);
+
+        //set rotation to be lying down for suitable at death state
+        _entityMesh.transform.rotation = Quaternion.Euler(new Vector3(-90,
+                                                        _entityMesh.transform.eulerAngles.y,
+                                                        _entityMesh.transform.eulerAngles.z));
+        
+        _entityMesh.transform.position = new Vector3(_entityMesh.transform.position.x,
+                                                    _entityMesh.transform.position.y + 0.13f,
+                                                    _entityMesh.transform.position.z);
+
+        entityWeapon.SetActive(false);
+
+        
     }
 
     /// <summary>
