@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using TMPro;
-using PrimeTween;
+using DG.Tweening;
 
 
 [RequireComponent(typeof(Seeker))]
@@ -79,10 +79,12 @@ public class EntitiesCore : MonoBehaviour
 
          ******************************************************************************************/
 
-        _walkSequence = Sequence.Create(-1, CycleMode.Yoyo)
-                        .Group(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y + 1, 0.3f))
-                        .Group(Tween.PositionY(_entityMesh.transform, 0, 0.3f));
-        
+        _walkSequence = DOTween.Sequence()
+        .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y + 0.5f, 0.3f))
+        .Append(_entityMesh.transform.DOMoveY(0, 0.3f))
+        .SetLoops(-1,LoopType.Restart);
+
+        _walkSequence.Play();
         //======================= SET =======================
 
     }
@@ -158,8 +160,8 @@ public class EntitiesCore : MonoBehaviour
 
     public virtual void OnDeath() 
     {
-        _walkSequence.Complete();
-        _walkSequence.Stop();
+        _walkSequence.Pause();
+        _entityMesh.transform.localPosition = Vector3.zero;
 
         //disable ai script
         this.enabled = false;
@@ -183,23 +185,29 @@ public class EntitiesCore : MonoBehaviour
         //deactivate entity weapon
         entityWeapon.SetActive(false);
 
-        Tween.StopAll(_entityMesh.transform);
+        //stop tween
 
         //add some force to the entity using tween
-        Tween.Position(this.transform, (this.transform.position + (-this.transform.forward * 2)), 2f).OnComplete(() =>
+        //Tween.Position(this.transform, (this.transform.position + (-this.transform.forward * 2)), 2f).OnComplete(() =>
+        //{
+        //    Sequence.Create(1, 0)
+        //    .ChainDelay(1f)
+        //    .Chain(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y - 1.2f, 3f))
+        //    .OnComplete(() =>
+        //    {
+        //        //set able to spawn so that spawner can spawn it
+        //        ableToSpawn = true;
+        //    });
+
+        //});
+
+        this.transform.DOMove(this.transform.position + (-this.transform.forward * 2), 2f).OnComplete(() =>
         {
-            Sequence.Create(1, 0)
-            .ChainDelay(1f)
-            .Chain(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y - 1.2f, 3f))
-            .OnComplete(() =>
-            {
-                //set able to spawn so that spawner can spawn it
-                ableToSpawn = true;
-            });
-
+            DOTween.Sequence()
+            .SetDelay(1f)
+            .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y - 1.2f, 3f))
+            .OnComplete(() => { ableToSpawn = true; });
         });
-
-        
 
     }
 
@@ -235,9 +243,7 @@ public class EntitiesCore : MonoBehaviour
         //deactivate entity weapon
         entityWeapon.SetActive(true);
 
-        _walkSequence = Sequence.Create(-1, CycleMode.Yoyo)
-                        .Group(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y + 1, 0.3f))
-                        .Group(Tween.PositionY(_entityMesh.transform, 0, 0.3f));
+        _walkSequence.Play();
 
         //set able to spawn so that spawner can not spawn it
         ableToSpawn = false;
