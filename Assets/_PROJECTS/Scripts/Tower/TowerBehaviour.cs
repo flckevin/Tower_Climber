@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [Header("PROJECTILE")]
+    [Header("TOWER GENERAL INFO")]
+    public float maximumRange; // maximum range of entity can come near
+
+    [Header("TOWER PROJECTILE")]
     public ProjectileBase projectile;//projectile of tower
 
     private SphereCollider _sphereCol;//get sphere collider
@@ -22,6 +25,9 @@ public class TowerBehaviour : MonoBehaviour
         //====================== GET ==========================
 
         //====================== SET ==========================
+
+        //set gamemanger to have this tower
+        GameManager.Instance.tower = this;
 
         //set sphere radius
         _sphereCol.radius = TowerData._towerCheckRadius;

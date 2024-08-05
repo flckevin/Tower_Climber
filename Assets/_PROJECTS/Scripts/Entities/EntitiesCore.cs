@@ -5,7 +5,7 @@ using UnityEngine;
 using Pathfinding;
 using TMPro;
 using DG.Tweening;
-
+using QuocAnh.EntityAnimsData;
 
 [RequireComponent(typeof(Seeker))]
 
@@ -27,8 +27,14 @@ public class EntitiesCore : MonoBehaviour
     [Header("General Weapon Info"), Space(10)]
     public GameObject entityWeapon;
 
-    protected Sequence _walkSequence;
+    
     //============================= ENTITY VAR =================================
+
+    //============================= SEQUENCES =================================
+    [HideInInspector]public Sequence _walkSequence;
+    [HideInInspector]public Sequence _attackSequence;
+    [HideInInspector] public Sequence _executeSeq;
+    //============================= SEQUENCES =================================
 
     //============================= AI VAR =================================
     [HideInInspector]public Path path; //store a star path to move to desired target
@@ -78,13 +84,7 @@ public class EntitiesCore : MonoBehaviour
          * Starting new animations in PrimeTween is extremely fast, so there is no need for caching.
 
          ******************************************************************************************/
-
-        _walkSequence = DOTween.Sequence()
-        .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y + 0.5f, 0.1f))
-        .Append(_entityMesh.transform.DOMoveY(0, 0.1f))
-        .SetLoops(-1,LoopType.Restart);
-
-        _walkSequence.Play();
+        
         //======================= SET =======================
 
     }
@@ -158,9 +158,12 @@ public class EntitiesCore : MonoBehaviour
         Debug.Log("RECEVING DAMAGE");
     }
 
+    /// <summary>
+    /// Function On Death Event
+    /// </summary>
     public virtual void OnDeath() 
     {
-        _walkSequence.Pause();
+        _executeSeq.Pause();
         _entityMesh.transform.localPosition = Vector3.zero;
 
         //disable ai script
@@ -185,13 +188,14 @@ public class EntitiesCore : MonoBehaviour
         //deactivate entity weapon
         entityWeapon.SetActive(false);
 
-        
-        _entityMesh.transform.DOLocalMove(_entityMesh.transform.position + (-this.transform.forward * 1.2f), 2f).OnComplete(() =>
+        //pushing entity mesh back behind
+        _entityMesh.transform.DOLocalMove(_entityMesh.transform.position + (-this.transform.forward * 0.2f), 2f).OnComplete(() =>
         {
+            //make a sequence
             DOTween.Sequence()
-            .SetDelay(1f)
-            .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y - 1.2f, 3f))
-            .OnComplete(() => { ableToSpawn = true; });
+            .SetDelay(1f) // make a small delay
+            .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y - 1.2f, 3f)) // move down to ground
+            .OnComplete(() => { ableToSpawn = true; }); // once it completed make sure set able to spawn to true so that spawner can spawn
         });
 
     }
@@ -206,14 +210,19 @@ public class EntitiesCore : MonoBehaviour
         _states = _stateToChange;
     }
 
-    public void OnResetDefault() 
+    /// <summary>
+    /// function to reset every thing of entity to defaut
+    /// </summary>
+    public virtual void OnResetDefault() 
     {
+
+        _executeSeq.Play();
 
         //reset health
         _health = entitiesData.health;
 
         //set rotation to be lying down for suitable at death state
-        _entityMesh.transform.rotation = Quaternion.Euler(Vector3.zero);
+        _entityMesh.transform.rotation = Quaternion.identity;
 
         //set position so it stand up
         _entityMesh.transform.localPosition = Vector3.zero;
@@ -226,12 +235,21 @@ public class EntitiesCore : MonoBehaviour
         //deactivate entity weapon
         entityWeapon.SetActive(true);
 
-        _walkSequence.Play();
+        ChangeAnimation(_walkSequence);
 
         //set able to spawn so that spawner can not spawn it
         ableToSpawn = false;
     }
 
+    /// <summary>
+    /// function to change to animation
+    /// </summary>
+    public void ChangeAnimation(Sequence _newSeq) 
+    {
+        _executeSeq.Pause();
+        _executeSeq = _newSeq;
+        _executeSeq.Play();
+    }
     #endregion
 
 
