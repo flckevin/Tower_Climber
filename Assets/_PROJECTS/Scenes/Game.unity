@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e1630e64eec4a46b2f61328bf57102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountEntityPerTypeOnScene: 2
+  amountEntityPerTypeOnScene: 10
   amountBloodPrefabOnScene: 10
   randSphereRadius: 20
   maximumEntityPerWave: 5

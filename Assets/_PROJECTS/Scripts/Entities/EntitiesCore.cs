@@ -80,8 +80,8 @@ public class EntitiesCore : MonoBehaviour
          ******************************************************************************************/
 
         _walkSequence = DOTween.Sequence()
-        .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y + 0.5f, 0.3f))
-        .Append(_entityMesh.transform.DOMoveY(0, 0.3f))
+        .Append(_entityMesh.transform.DOMoveY(_entityMesh.transform.position.y + 0.5f, 0.1f))
+        .Append(_entityMesh.transform.DOMoveY(0, 0.1f))
         .SetLoops(-1,LoopType.Restart);
 
         _walkSequence.Play();
@@ -185,23 +185,8 @@ public class EntitiesCore : MonoBehaviour
         //deactivate entity weapon
         entityWeapon.SetActive(false);
 
-        //stop tween
-
-        //add some force to the entity using tween
-        //Tween.Position(this.transform, (this.transform.position + (-this.transform.forward * 2)), 2f).OnComplete(() =>
-        //{
-        //    Sequence.Create(1, 0)
-        //    .ChainDelay(1f)
-        //    .Chain(Tween.PositionY(_entityMesh.transform, _entityMesh.transform.position.y - 1.2f, 3f))
-        //    .OnComplete(() =>
-        //    {
-        //        //set able to spawn so that spawner can spawn it
-        //        ableToSpawn = true;
-        //    });
-
-        //});
-
-        this.transform.DOMove(this.transform.position + (-this.transform.forward * 2), 2f).OnComplete(() =>
+        
+        _entityMesh.transform.DOLocalMove(_entityMesh.transform.position + (-this.transform.forward * 1.2f), 2f).OnComplete(() =>
         {
             DOTween.Sequence()
             .SetDelay(1f)
@@ -231,9 +216,7 @@ public class EntitiesCore : MonoBehaviour
         _entityMesh.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         //set position so it stand up
-        _entityMesh.transform.position = new Vector3(_entityMesh.transform.position.x,
-                                                    0,
-                                                    _entityMesh.transform.position.z);
+        _entityMesh.transform.localPosition = Vector3.zero;
         //setting tag
         this.gameObject.tag = "Enemy";
 
