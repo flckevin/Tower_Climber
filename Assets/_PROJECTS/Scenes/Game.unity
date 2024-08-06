@@ -388,6 +388,8 @@ MonoBehaviour:
   amountEntityPerTypeOnScene: 10
   amountBloodPrefabOnScene: 10
   randSphereRadius: 20
+  entityWaveSpawnTemplate:
+  - {fileID: 11400000, guid: b6a7321fa05728d4989b435fef0af1c6, type: 2}
   maximumEntityPerWave: 5
   delayBetween: 2
   entities:

@@ -8,6 +8,7 @@ public class EntitiesSpawner : MonoBehaviour
     public int amountEntityPerTypeOnScene; // amount per enemy that going to be in scene
     public int amountBloodPrefabOnScene; //amount of blood particle that going to be on scene
     public float randSphereRadius; // sphere radius
+    public EntitySpawnerWaveTemplate[] entityWaveSpawnTemplate; // template of which type enemy to spawn next
 
     [Header("Entity"),Space(10)]
     public int maximumEntityPerWave; // maximum amount of enemy that can spawn during current wave
@@ -17,8 +18,53 @@ public class EntitiesSpawner : MonoBehaviour
     [Header("Entity Ultility"), Space(10)]
     public ParticleSystem bloodParticlePrefab;//blood particle prefab
 
+
+    private int _currentEnemyTypeID = 0; // enemy type id IN TEMPLATE
+    private int _CurrentEnemyTypeID // enemy type id IN TEMPLATE
+    {
+
+        get 
+        {
+            return _currentEnemyTypeID;
+        }
+        set 
+        {
+            if (_currentEnemyTypeID >= entityWaveSpawnTemplate[_TemplateID].entity.Length - 1)
+            {
+                _currentEnemyTypeID = 0;
+            }
+            else 
+            {
+                _currentEnemyTypeID = value;
+            }
+        }
+    
+    }
+
+    private int _templateID = 0; // id of template currently using to spawn enemy
+    private int _TemplateID // id of template currently using to spawn enemy
+    {
+        get 
+        {
+            return _templateID;
+        }
+        set 
+        {
+            if (_templateID >= entityWaveSpawnTemplate.Length - 1)
+            {
+                _templateID = 0;
+            }
+            else 
+            {
+                _templateID = value;
+            }
+        }
+    }
+    
     private int spawnedAmount; // spawn amount
     private Coroutine _spawnCou; // spawn couroutine
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,8 +112,11 @@ public class EntitiesSpawner : MonoBehaviour
             //get random point on a circle
             Vector3 _spawnPos = randomCirlceSpawnPoint();
             //get an entity from pool
-            EntitiesCore _nextEntity = PoolManager.GetItem<EntitiesCore>(entities[0].name);
+            EntitiesCore _nextEntity = PoolManager.GetItem<EntitiesCore>(entityWaveSpawnTemplate[_TemplateID].entity[_CurrentEnemyTypeID]);
+            //next enemy to spawn
+            _CurrentEnemyTypeID++;
 
+            //if next entity able to spawn
             if (_nextEntity.ableToSpawn == true) 
             {
                 //set that entity position to be at that random spawn position
