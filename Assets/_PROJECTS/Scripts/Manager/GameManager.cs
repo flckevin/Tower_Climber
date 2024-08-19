@@ -5,6 +5,9 @@ using UnityEngine;
 using Quocanh.pattern;
 public class GameManager : QuocAnhSingleton<GameManager>
 {
-    [Header("Player")]
-    public TowerBehaviour tower;
+    [Header("PLAYER"),Space(10)]
+    public TowerBehaviour tower;    //the tower itslef
+
+    [Header("GAME"),Space(10)]
+    public int currentWave;         //current wave that player playing
 }
