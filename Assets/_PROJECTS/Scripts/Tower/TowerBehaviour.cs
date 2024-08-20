@@ -6,15 +6,18 @@ using UnityEngine;
 public class TowerBehaviour : MonoBehaviour
 {
     [Header("TOWER GENERAL INFO")]
-    public float maximumRange; // maximum range of entity can come near
+    public float maximumRange;                                      // maximum range of entity can come near
 
     [Header("TOWER PROJECTILE")]
-    public ProjectileBase projectile;//projectile of tower
+    public ProjectileBase projectile;                               //projectile of tower
 
-    private SphereCollider _sphereCol;//get sphere collider
-    [SerializeField]private List<EntitiesCore> _enemy = new List<EntitiesCore>(); // list to store all enmey
-    private EntitiesCore _currentTarget; // target to focus to kill
-    private float _time;//last time of the frame to calculate fire rate
+
+
+    private SphereCollider _sphereCol;                              //get sphere collider
+    private List<EntitiesCore> _enemy = new List<EntitiesCore>();   // list to store all enmey
+    private EntitiesCore _currentTarget;                            // target to focus to kill
+    private float _time;                                            //last time of the frame to calculate fire rate
+    private int enemyKilled;                                        //counter for amount of enemy killed in a wave
 
     // Start is called before the first frame update
     void Start()
@@ -104,7 +107,23 @@ public class TowerBehaviour : MonoBehaviour
 
             //call back event of projectile on hit
             //which deal damage to the enemy
-            _projectile._callBackOnHit = () => { _currentTarget.OndamageReceive(TowerData._towerDamageDeal,_projectile.transform); };
+            _projectile._callBackOnHit = () => 
+            { 
+                //dealing damage to enemy
+                _currentTarget.OndamageReceive(TowerData._towerDamageDeal,_projectile.transform);
+
+                //increase amount of enemy been killed
+                enemyKilled++;
+
+                //if enemy killed is larger or equal to maximum entity spawn amount
+                if (enemyKilled >= GameManager.Instance.entitySpawner.maximumEntityPerWave) 
+                {
+                    //reset amount of enemy killed so it wont increase wave in ridiculous way
+                    enemyKilled = 0;
+                    //end wave
+                    GameManager.Instance.entitySpawner.OnEndWave(GameManager.Instance.entitySpawner.waveDelay);
+                }
+            };
 
             //set time back to default so we can calculate next time to fire
             _time = 0;

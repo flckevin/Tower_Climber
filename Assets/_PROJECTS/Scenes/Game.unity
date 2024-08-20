@@ -342,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 1428440651}
   currentWave: 1
+  entitySpawner: {fileID: 674196442}
 --- !u!1 &674196440
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +512,7 @@ MonoBehaviour:
   entities:
   - {fileID: 5277743483067554037, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
   bloodParticlePrefab: {fileID: 4972837880050995390, guid: 7a9b388f6ca14024d989a0206fa01326, type: 3}
+  spawnedAmount: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

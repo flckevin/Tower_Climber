@@ -6,8 +6,12 @@ using Quocanh.pattern;
 public class GameManager : QuocAnhSingleton<GameManager>
 {
     [Header("PLAYER"),Space(10)]
-    public TowerBehaviour tower;    //the tower itslef
+    public TowerBehaviour tower;                //the tower itslef
 
     [Header("GAME"),Space(10)]
-    public int currentWave;         //current wave that player playing
+    public int currentWave;                     //current wave that player playing
+
+    [Header("WAVE SPAWNER"), Space(10)]
+    public EntitiesSpawner entitySpawner;       //entity spawner
+
 }

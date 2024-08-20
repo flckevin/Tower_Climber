@@ -8,6 +8,7 @@ public class EntitiesSpawner : MonoBehaviour
     public int amountEntityPerTypeOnScene;          // amount per enemy that going to be in scene
     public int amountBloodPrefabOnScene;            //amount of blood particle that going to be on scene
     public float randSphereRadius;                  // sphere radius
+    public int waveDelay;                           //delay amount before moving to next wave
 
     [Header("SPAWNER TEMPLATE"), Space(10)]
     public EntitySpawnerWaveTemplate[] entityWaveSpawnTemplate; // template of which type enemy to spawn next
@@ -15,7 +16,7 @@ public class EntitiesSpawner : MonoBehaviour
 
     [Header("ENTITY"),Space(10)]
     public int maximumEntityPerWave = 13;               // maximum amount of enemy that can spawn during current wave
-    public float delayBetween;                          // delay between waves
+    public float spawnDelay;                            // delay between spawn
     public List<EntitiesCore> entities;                 //list of all avalible entity in game
 
     [Header("ENTITY ULTILIY"), Space(10)]
@@ -193,35 +194,55 @@ public class EntitiesSpawner : MonoBehaviour
             //if spawned amount is more than maximum 
             if (spawnedAmount >= maximumEntityPerWave) 
             {
-                yield return new WaitForSeconds(2f);
-                //break out of loop
-                OnEndWave();
                 break;
             }
 
             //delay few second
-            yield return new WaitForSeconds(delayBetween);  
+            yield return new WaitForSeconds(spawnDelay);  
         }
 
         
 
     }
 
-    private void OnEndWave() 
+    /// <summary>
+    /// Event on end wave
+    /// </summary>
+    public void OnEndWave(int _delay) 
     {
+        StartCoroutine(EndWave(_delay));
+    }
+
+    private IEnumerator EndWave(int _delay) 
+    {
+        yield return new WaitForSeconds(_delay);
+
+        //increase curve key frame to move onto next value
         _CurrentCurveKeyID += 0.1f;
+        //calculating key frame to decide wheter to increase or decrease maximum amount of enemy to spawn
         maximumEntityPerWave = MaximumAmountCalculation();
+        //increase wave which move to next wave
         GameManager.Instance.currentWave++;
+        //set spawned amount to 0 to reset spawner
         spawnedAmount = 0;
+        //start sapwning again
         StartSpawning();
     }
 
+    #region ============================== HELPER FUNCTIONS ==============================
+
+    /// <summary>
+    /// function to calculate wheter to decide increase or decrease
+    /// </summary>
+    /// <returns></returns>
     private int MaximumAmountCalculation() 
     {
-        
-        int _oldKeyVal = (int)(spawnCurve[_CurrentCurveID].Evaluate(_CurrentCurveKeyID - 0.1f) * 10); //get old key value
-        int _newKeyVal = (int)(spawnCurve[_CurrentCurveID].Evaluate(_CurrentCurveKeyID) * 10);        //get new key value
-        int _finalVal;                                                                                //final result
+        //get old key for value comparation
+        int _oldKeyVal = (int)(spawnCurve[_CurrentCurveID].Evaluate(_CurrentCurveKeyID - 0.1f) * 10);
+        //get new key for value comparation
+        int _newKeyVal = (int)(spawnCurve[_CurrentCurveID].Evaluate(_CurrentCurveKeyID) * 10);       
+        //storage for final decesion
+        int _finalVal;                                                                                
 
         //if new key value is larger than new key value or equal to it
         if (_newKeyVal > _oldKeyVal || _newKeyVal == _oldKeyVal)
@@ -239,6 +260,11 @@ public class EntitiesSpawner : MonoBehaviour
         return _finalVal;
     }
 
+
+    /// <summary>
+    /// function to randomize spawn position in a circle
+    /// </summary>
+    /// <returns></returns>
     private Vector3 randomCirlceSpawnPoint() 
     {
         Vector3 _spawnPos;
@@ -260,4 +286,8 @@ public class EntitiesSpawner : MonoBehaviour
 
         return _spawnPos;
     }
+
+    #endregion
+
+
 }

@@ -7,10 +7,8 @@ using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour
 {
-    public Action _callBackOnHit; // call back function when arrow hit it target
-    public ProjectileData _projectileData; // projectile data
-    // Start is called before the first frame update
-   
+    public Action _callBackOnHit;               // call back function when arrow hit it target
+    public ProjectileData _projectileData;      // projectile data
 
     /// <summary>
     /// shoot function to nemey
@@ -27,27 +25,19 @@ public class ProjectileBase : MonoBehaviour
         this.transform.position = _from;
         //look at target
         this.transform.LookAt(_target.transform);
-        //move arrow position to enemy
-        //Tween.Position(this.transform, _targetPos, duration: _speed).OnComplete(() => 
-        //{
-        //    //wait for 1 sec
-        //    Tween.Delay(1f);
-        //    //scale down
-        //    Tween.Scale(this.transform, endValue: 0, duration: 0.3f);
-        //    //wait for few sec
-        //    Tween.Delay(0.4f);
-        //    //deactivate this arrow
-        //    this.gameObject.SetActive(false);
-        //    //call back on hit
-        //    _callBackOnHit();
-        //});
 
+        //move arrow to target
         this.transform.DOMove(_targetPos, _speed).OnComplete(() =>
         {
-            DOTween.Sequence()
-            .SetDelay(1f)
-            .Append(this.transform.DOScale(0, 0.3f));
+            // when it finished to target
+
+            //DOTween.Sequence()
+            //.SetDelay(1f)
+            //.Append(this.transform.DOScale(0, 0.3f));
+
+            //deactivate objcet
             this.gameObject.SetActive(false);
+            //call callback function
             _callBackOnHit();
         });
     }
