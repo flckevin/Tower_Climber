@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Quocanh.pattern;
+using UnityEngine.UI;
+using TMPro;
 public class GameManager : QuocAnhSingleton<GameManager>
 {
     [Header("PLAYER"),Space(10)]
@@ -14,4 +16,7 @@ public class GameManager : QuocAnhSingleton<GameManager>
     [Header("WAVE SPAWNER"), Space(10)]
     public EntitiesSpawner entitySpawner;       //entity spawner
 
+    [Header("GAME UI"), Space(10)]
+    public Slider waveSlider;
+    public TextMeshProUGUI waveText;
 }

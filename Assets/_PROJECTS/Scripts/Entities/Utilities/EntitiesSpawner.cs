@@ -137,6 +137,9 @@ public class EntitiesSpawner : MonoBehaviour
 
         //start spawning
         StartSpawning();
+
+        //update text display of current wave
+        GameManager.Instance.waveText.text = $"Wave {GameManager.Instance.currentWave}";
         //===================== SET =====================
     }
 
@@ -145,6 +148,8 @@ public class EntitiesSpawner : MonoBehaviour
     /// </summary>
     public void StartSpawning() 
     {
+        //reset slider
+        GameManager.Instance.waveSlider.value = 1;
         //calling spawn function
         _spawnCou = StartCoroutine(SpawnCou());
     }
@@ -192,7 +197,7 @@ public class EntitiesSpawner : MonoBehaviour
             
 
             //if spawned amount is more than maximum 
-            if (spawnedAmount >= maximumEntityPerWave) 
+            if (GameManager.Instance.tower.enemyKilled >= maximumEntityPerWave ) 
             {
                 break;
             }
@@ -223,6 +228,8 @@ public class EntitiesSpawner : MonoBehaviour
         maximumEntityPerWave = MaximumAmountCalculation();
         //increase wave which move to next wave
         GameManager.Instance.currentWave++;
+        //update text display of current wave
+        GameManager.Instance.waveText.text = $"Wave {GameManager.Instance.currentWave}" ;
         //set spawned amount to 0 to reset spawner
         spawnedAmount = 0;
         //start sapwning again

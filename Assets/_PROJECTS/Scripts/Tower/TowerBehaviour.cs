@@ -13,11 +13,18 @@ public class TowerBehaviour : MonoBehaviour
 
 
 
+
+    //======================================== PRIVATE/HIDDEN VAR ========================================
+
+    [HideInInspector]public int enemyKilled;                        //counter for amount of enemy killed in a wave
     private SphereCollider _sphereCol;                              //get sphere collider
     private List<EntitiesCore> _enemy = new List<EntitiesCore>();   // list to store all enmey
     private EntitiesCore _currentTarget;                            // target to focus to kill
     private float _time;                                            //last time of the frame to calculate fire rate
-    private int enemyKilled;                                        //counter for amount of enemy killed in a wave
+    
+
+    //=============================================================================================
+
 
     // Start is called before the first frame update
     void Start()
@@ -115,6 +122,11 @@ public class TowerBehaviour : MonoBehaviour
                 //increase amount of enemy been killed
                 enemyKilled++;
 
+                //display value of enemy rest on screen
+                GameManager.Instance.waveSlider.value = (float)(GameManager.Instance.entitySpawner.maximumEntityPerWave - enemyKilled / GameManager.Instance.entitySpawner.maximumEntityPerWave);
+                
+                Debug.Log($"enemy killed {(float)GameManager.Instance.entitySpawner.maximumEntityPerWave - enemyKilled / GameManager.Instance.entitySpawner.maximumEntityPerWave}");
+                
                 //if enemy killed is larger or equal to maximum entity spawn amount
                 if (enemyKilled >= GameManager.Instance.entitySpawner.maximumEntityPerWave) 
                 {
