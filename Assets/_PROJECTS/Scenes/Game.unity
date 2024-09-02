@@ -785,7 +785,7 @@ MonoBehaviour:
   amountEntityPerTypeOnScene: 10
   amountBloodPrefabOnScene: 10
   randSphereRadius: 20
-  waveDelay: 1
+  waveDelay: 5
   entityWaveSpawnTemplate:
   - {fileID: 11400000, guid: b6a7321fa05728d4989b435fef0af1c6, type: 2}
   spawnCurve:
@@ -904,7 +904,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   maximumEntityPerWave: 5
-  spawnDelay: 1
+  spawnDelay: 2
   entities:
   - {fileID: 5277743483067554037, guid: e41691fa51c91b14fa5ee1e7dd37abdc, type: 3}
   bloodParticlePrefab: {fileID: 4972837880050995390, guid: 7a9b388f6ca14024d989a0206fa01326, type: 3}

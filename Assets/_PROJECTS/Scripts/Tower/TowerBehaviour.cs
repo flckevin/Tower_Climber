@@ -122,10 +122,12 @@ public class TowerBehaviour : MonoBehaviour
                 //increase amount of enemy been killed
                 enemyKilled++;
 
+                //calculate value of enemy left for slider to display on screen
+                float _slideVal = (float)(GameManager.Instance.entitySpawner.maximumEntityPerWave - enemyKilled) / GameManager.Instance.entitySpawner.maximumEntityPerWave;
                 //display value of enemy rest on screen
-                GameManager.Instance.waveSlider.value = (float)(GameManager.Instance.entitySpawner.maximumEntityPerWave - enemyKilled / GameManager.Instance.entitySpawner.maximumEntityPerWave);
+                GameManager.Instance.waveSlider.value = _slideVal;
                 
-                Debug.Log($"enemy killed {(float)GameManager.Instance.entitySpawner.maximumEntityPerWave - enemyKilled / GameManager.Instance.entitySpawner.maximumEntityPerWave}");
+                Debug.Log($"enemy killed {_slideVal}");
                 
                 //if enemy killed is larger or equal to maximum entity spawn amount
                 if (enemyKilled >= GameManager.Instance.entitySpawner.maximumEntityPerWave) 
