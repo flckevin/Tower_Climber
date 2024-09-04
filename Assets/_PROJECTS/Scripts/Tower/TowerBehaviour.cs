@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [Header("TOWER GENERAL INFO")]
-    public float maximumRange;                                      // maximum range of entity can come near
 
     [Header("TOWER PROJECTILE")]
     public ProjectileBase projectile;                               //projectile of tower
@@ -40,7 +38,7 @@ public class TowerBehaviour : MonoBehaviour
         GameManager.Instance.tower = this;
 
         //set sphere radius
-        _sphereCol.radius = TowerData._towerCheckRadius;
+        _sphereCol.radius = TowerData.towerCheckRadius;
         
         //if there is projectile to spawn
         if (projectile != null) 
@@ -69,7 +67,7 @@ public class TowerBehaviour : MonoBehaviour
         //increase time rate
         _time += Time.deltaTime;
         //calculate next time to fire
-        float _nextTimeFire = 1 / TowerData._towerFireRate;
+        float _nextTimeFire = 1 / TowerData.towerFireRate;
 
         //if focus target not exist
         if (_currentTarget == null)
@@ -117,7 +115,7 @@ public class TowerBehaviour : MonoBehaviour
             _projectile._callBackOnHit = () => 
             { 
                 //dealing damage to enemy
-                _currentTarget.OndamageReceive(TowerData._towerDamageDeal,_projectile.transform);
+                _currentTarget.OndamageReceive(TowerData.towerDamageDeal,_projectile.transform);
 
                 //increase amount of enemy been killed
                 enemyKilled++;

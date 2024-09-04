@@ -4,19 +4,33 @@ using UnityEngine;
 
 public static class TowerData 
 {
-    public static float _towerFireRate 
+    #region =========================== GENERAL DATA ===========================
+    public static float towerFireRate 
     {
-        get { return PlayerPrefs.GetInt("T_FireRage", 1); }
+        get { return PlayerPrefs.GetFloat("T_FireRate", 1); }
+        set 
+        {
+            PlayerPrefs.SetFloat("T_FireRate", value);
+        }
     }
 
-    public static float _towerDamageDeal 
+    public static float towerDamageDeal 
     {
-        get { return PlayerPrefs.GetInt("T_FireRage", 1); }
+        get { return PlayerPrefs.GetFloat("T_FireDamage", 1); }
+        set 
+        {
+            PlayerPrefs.SetFloat("T_FireDamage", value);
+        }
     }
 
-
-    public static float _towerCheckRadius 
+    public static float towerCheckRadius 
     {
-        get { return PlayerPrefs.GetInt("T_FireRage", 12); }
+        get { return PlayerPrefs.GetFloat("T_FireRage", 12); }
+        set 
+        {
+            PlayerPrefs.SetFloat("T_FireRage", value);
+        }
     }
+
+    #endregion
 }

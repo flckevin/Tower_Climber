@@ -24,7 +24,7 @@ namespace Enetity.Common
                 }
                
             }
-            else if(_towerDistance <= GameManager.Instance.tower.maximumRange)
+            else if(_towerDistance <= _entity.entitiesData.attackRange)
             {
                 //create new attack behaviour
                 AttackTarget_Common _attackTarget = new AttackTarget_Common();
